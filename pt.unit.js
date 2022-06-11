@@ -1,11 +1,11 @@
 /**
- * pts
+ * pt.unit
  */
 
-const path = require("path");
 const canvasSketch = require("canvas-sketch");
 const createInputEvents = require("simple-input-events");
-const { CanvasForm, Pt, Bound } = require("pts");
+const { CanvasForm, Pt, Bound, Create, Group } = require("pts");
+const path = require("path");
 
 const sketch = ({ canvas, context: ctx, width, height }) => {
   const form = new CanvasForm(ctx);
@@ -25,8 +25,23 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
 
   return {
     render({ playhead }) {
-      ctx.fillStyle = "gray";
+      ctx.fillStyle = "#123";
       ctx.fillRect(0, 0, size.x, size.y);
+
+      // get a line from pointer to center, and use it for direction and magnitude calculations
+      let ln = mouse.$subtract(center.$add(0.1));
+      let dir = ln.$unit();
+      let mag = ln.magnitude();
+      let mag2 = size.magnitude();
+
+      // create a grid of lines
+      let lines = Create.gridPts(innerBound, 20, 10).map((p) => {
+        let dist = p.$subtract(center).magnitude() / mag2;
+        return new Group(p, p.$add(dir.$multiply(dist * (20 + mag / 5))));
+      });
+
+      form.strokeOnly("#fe3").line([center, mouse]);
+      form.strokeOnly("#fff").lines(lines);
     },
     resize({ width, height }) {
       size.set([width, height]);
@@ -42,7 +57,7 @@ const settings = {
   // exportPixelRatio: 2,
   // scaleToFitPadding: 0,
   // scaleToView: true,
-  // animate: true,
+  animate: true,
   // fps: 30,
   // playbackRate: "throttle",
   // duration: 4,
