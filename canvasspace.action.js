@@ -1,17 +1,21 @@
 const canvasSketch = require("canvas-sketch");
 const createInputEvents = require("simple-input-events");
-const { CanvasForm, Pt, Bound, Line, Util, Rectangle } = require("pts");
+const { CanvasForm, Pt, Bound, Group } = require("pts");
 
 const sketch = ({ canvas, context: ctx, width, height }) => {
   const form = new CanvasForm(ctx);
 
+  const chain = new Group();
+  let stretch = false;
+
   // mouse events
   const event = createInputEvents(canvas);
   let mouse = new Pt();
-  event.on("down", ({ position, event }) => {});
-  event.on("up", ({ position, event }) => {});
+  event.on("down", ({ position, event }) => (stretch = true));
+  event.on("up", ({ position, event }) => (stretch = false));
   event.on("move", ({ position, event }) => {
     mouse.set(position);
+    chain.push(new Pt(mouse));
   });
 
   const size = new Pt(width, height);
@@ -19,14 +23,14 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
 
   return {
     render({ width, height }) {
-      ctx.fillStyle = "#f03";
+      ctx.fillStyle = "#fe3";
       ctx.fillRect(0, 0, width, height);
 
-      let subs = innerBound.map((p) => Line.subpoints([p, mouse], 30));
-      let rects = Util.zip(subs).map((r, i) =>
-        Rectangle.corners(r).rotate2D((i * Math.PI) / 60, mouse)
-      );
-      form.strokeOnly("#FDC", 2).polygons(rects);
+      // shorten the line when it's not stretching
+      if (chain.length > (stretch ? 100 : 10)) chain.shift();
+
+      form.strokeOnly("#123", 3).line(chain);
+      form.fillOnly("#123").point(mouse, 10, "circle");
     },
     resize({ width, height }) {
       size.set([width, height]); // REVIEW: when setting Pt, param has to be an array, while creating doesn't.
