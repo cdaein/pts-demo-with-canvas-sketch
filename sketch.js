@@ -3,27 +3,47 @@
  */
 
 const canvasSketch = require("canvas-sketch");
-const { CanvasForm, Pt } = require("pts");
+const createInputEvents = require("simple-input-events");
+const { CanvasForm, Pt, Bound } = require("pts");
 
 const sketch = ({ canvas, context: ctx }) => {
   const form = new CanvasForm(ctx);
+  const size = new Pt(width, height);
+  const center = size.$divide(2);
+  const innerBound = new Bound(new Pt(), new Pt(size));
 
-  return ({ context, width, height }) => {
-    context.fillStyle = "white";
-    context.fillRect(0, 0, width, height);
+  // mouse events
+  const event = createInputEvents(canvas);
+  let mouse = new Pt();
+  event.on("down", ({ position, event }) => {});
+  event.on("up", ({ position, event }) => {});
+  event.on("move", ({ position, event }) => {
+    mouse.set(position);
+  });
+
+  return {
+    render({ width, height }) {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    },
+    resize({ width, height, playhead }) {
+      size.set([width, height]); // REVIEW: when setting Pt, param has to be an array, while creating doesn't.
+      center.set(size.$divide(2));
+      innerBound.bottomRight = size;
+    },
   };
 };
 
 const settings = {
-  dimensions: [600, 600],
-  pixelRatio: 2,
-  exportPixelRatio: 2,
+  // dimensions: [600, 600],
+  // pixelRatio: 2,
+  // exportPixelRatio: 2,
   // scaleToFitPadding: 0,
-  scaleToView: true,
-  animate: true,
+  // scaleToView: true,
+  // animate: true,
   // fps: 30,
   // playbackRate: "throttle",
-  duration: 4,
+  // duration: 4,
   // suffix: new Date().getTime(),
 };
 

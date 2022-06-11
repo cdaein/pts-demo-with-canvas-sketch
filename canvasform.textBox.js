@@ -3,8 +3,6 @@ const createInputEvents = require("simple-input-events");
 const { CanvasForm, Pt, Bound, Rectangle, Create, Typography } = require("pts");
 
 const sketch = ({ canvas, context: ctx, width, height }) => {
-  // const space = new CanvasSpace(canvas);
-  // const form = space.getForm();
   const form = new CanvasForm(ctx);
   const size = new Pt(width, height);
   const center = size.$divide(2);
