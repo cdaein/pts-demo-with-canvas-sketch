@@ -1,0 +1,24 @@
+{
+  "name": "pts-demo-with-canvas-sketch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sketch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaein/pts-demo-with-canvas-sketch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cdaein/pts-demo-with-canvas-sketch/issues"
+  },
+  "homepage": "https://github.com/cdaein/pts-demo-with-canvas-sketch#readme",
+  "dependencies": {
+    "canvas-sketch": "^0.7.5",
+    "pts": "^0.10.11"
+  }
+}
