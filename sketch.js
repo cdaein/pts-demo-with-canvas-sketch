@@ -6,7 +6,7 @@ const canvasSketch = require("canvas-sketch");
 const createInputEvents = require("simple-input-events");
 const { CanvasForm, Pt, Bound } = require("pts");
 
-const sketch = ({ canvas, context: ctx }) => {
+const sketch = ({ canvas, context: ctx, width, height }) => {
   const form = new CanvasForm(ctx);
   const size = new Pt(width, height);
   const center = size.$divide(2);
@@ -22,11 +22,11 @@ const sketch = ({ canvas, context: ctx }) => {
   });
 
   return {
-    render({ width, height }) {
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, width, height);
+    render({ playhead }) {
+      ctx.fillStyle = "gray";
+      ctx.fillRect(0, 0, size.x, size.y);
     },
-    resize({ width, height, playhead }) {
+    resize({ width, height }) {
       size.set([width, height]); // REVIEW: when setting Pt, param has to be an array, while creating doesn't.
       center.set(size.$divide(2));
       innerBound.bottomRight = size;
