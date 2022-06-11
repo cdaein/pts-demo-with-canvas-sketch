@@ -17,8 +17,9 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   let mouse = new Pt();
   event.on("down", ({ position, event }) => {});
   event.on("up", ({ position, event }) => getGradients());
-  event.on("move", ({ position, event }) => {
-    mouse.set(position);
+  event.on("move", ({ position, event, uv }) => {
+    mouse.set(uv);
+    mouse.multiply(size);
   });
 
   let waves = [];

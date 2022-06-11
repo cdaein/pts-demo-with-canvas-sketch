@@ -19,8 +19,9 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   let mouse = new Pt();
   event.on("down", ({ position, event }) => {});
   event.on("up", ({ position, event }) => {});
-  event.on("move", ({ position, event }) => {
-    mouse.set(position);
+  event.on("move", ({ position, event, uv }) => {
+    mouse.set(uv);
+    mouse.multiply(size);
   });
 
   return {
@@ -76,12 +77,12 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
 };
 
 const settings = {
-  // dimensions: [600, 600],
+  dimensions: [800, 800],
   // pixelRatio: 2,
   // exportPixelRatio: 2,
   // scaleToFitPadding: 0,
   // scaleToView: true,
-  // animate: true,
+  animate: true,
   // fps: 30,
   // playbackRate: "throttle",
   // duration: 4,

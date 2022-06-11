@@ -63,8 +63,9 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   let mouse = new Pt();
   event.on("down", ({ position, event }) => {});
   event.on("up", ({ position, event }) => {});
-  event.on("move", ({ position, event }) => {
-    mouse.set(position);
+  event.on("move", ({ position, uv }) => {
+    mouse.set(uv);
+    mouse.multiply(size);
     pts.push(new Confetti(mouse));
   });
 
@@ -93,7 +94,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
 
 const settings = {
   dimensions: [600, 600],
-  pixelRatio: 1,
+  // pixelRatio: 2,
   // exportPixelRatio: 2,
   // scaleToFitPadding: 0,
   // scaleToView: true,

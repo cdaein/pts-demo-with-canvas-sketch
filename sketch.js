@@ -17,8 +17,9 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   let mouse = new Pt();
   event.on("down", ({ position, event }) => {});
   event.on("up", ({ position, event }) => {});
-  event.on("move", ({ position, event }) => {
-    mouse.set(position);
+  event.on("move", ({ position, event, uv }) => {
+    mouse.set(uv);
+    mouse.multiply(size);
   });
 
   return {
@@ -27,7 +28,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
       ctx.fillRect(0, 0, size.x, size.y);
     },
     resize({ width, height }) {
-      size.set([width, height]); // REVIEW: when setting Pt, param has to be an array, while creating doesn't.
+      size.set([width, height]);
       center.set(size.$divide(2));
       innerBound.bottomRight = size;
     },
@@ -35,7 +36,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
 };
 
 const settings = {
-  // dimensions: [600, 600],
+  dimensions: [600, 600],
   // pixelRatio: 2,
   // exportPixelRatio: 2,
   // scaleToFitPadding: 0,

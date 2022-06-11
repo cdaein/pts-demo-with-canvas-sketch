@@ -1,9 +1,12 @@
 const canvasSketch = require("canvas-sketch");
 const createInputEvents = require("simple-input-events");
 const { CanvasForm, Pt, Bound, Group } = require("pts");
+const path = require("path");
 
 const sketch = ({ canvas, context: ctx, width, height }) => {
   const form = new CanvasForm(ctx);
+  const size = new Pt(width, height);
+  const innerBound = new Bound(new Pt(), new Pt(size));
 
   const chain = new Group();
   let stretch = false;
@@ -13,13 +16,11 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   let mouse = new Pt();
   event.on("down", ({ position, event }) => (stretch = true));
   event.on("up", ({ position, event }) => (stretch = false));
-  event.on("move", ({ position, event }) => {
-    mouse.set(position);
+  event.on("move", ({ position, event, uv }) => {
+    mouse.set(uv);
+    mouse.multiply(size);
     chain.push(new Pt(mouse));
   });
-
-  const size = new Pt(width, height);
-  const innerBound = new Bound(new Pt(), new Pt(size));
 
   return {
     render({ width, height }) {
@@ -40,17 +41,17 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
 };
 
 const settings = {
-  // dimensions: [600, 600],
+  dimensions: [800, 800],
   // pixelRatio: 2,
   // exportPixelRatio: 2,
   // scaleToFitPadding: 0,
-  scaleToView: true,
+  // scaleToView: true,
   animate: true,
   // duration: 4,
   // fps: 30,
   // playbackRate: "throttle",
   duration: 4,
-  // suffix: new Date().getTime(),
+  prefix: path.basename(__filename),
 };
 
 canvasSketch(sketch, settings);
