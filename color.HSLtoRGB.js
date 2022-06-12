@@ -52,7 +52,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
       ctx.fillStyle = "gray";
       ctx.fillRect(0, 0, size.x, size.y);
 
-      t = Num.cycle((time % 3000) / 3000);
+      t = Num.cycle(((time * 1000) % 3000) / 3000);
 
       // get HSL color string, given a point position
       const color = (p) => {
