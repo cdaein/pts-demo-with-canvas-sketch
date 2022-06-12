@@ -40,7 +40,7 @@ const settings = {
   exportPixelRatio: 2,
   // scaleToFitPadding: 0,
   // scaleToView: true,
-  // animate: true,
+  animate: true,
   // fps: 30,
   // playbackRate: "throttle",
   // duration: 4,
