@@ -18,7 +18,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   const mouse = new Pt();
   event.on("down", ({ position, event }) => {});
   event.on("up", ({ position, event }) => {});
-  event.on("move", ({ position, event, uv }) => {
+  event.on("move", ({ position, event, dragging, uv }) => {
     mouse.to(uv).multiply(size);
   });
 
