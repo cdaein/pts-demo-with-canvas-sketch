@@ -19,8 +19,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
   event.on("down", ({ position, event }) => {});
   event.on("up", ({ position, event }) => {});
   event.on("move", ({ position, event, uv }) => {
-    mouse.set(uv);
-    mouse.multiply(size);
+    mouse.to(uv).multiply(size);
   });
 
   return {
@@ -28,8 +27,8 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
       form.fillOnly("gray").rect([[0, 0], size]);
     },
     resize({ width, height }) {
-      size.set([width, height]);
-      center.set(size.$divide(2));
+      size.to(width, height);
+      center.to(size.$divide(2));
       innerBound.bottomRight = size;
     },
   };
