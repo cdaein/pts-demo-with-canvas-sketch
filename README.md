@@ -1,4 +1,4 @@
-# pts.js demo recreated with canvas-sketch
+# pts.js demo sketches with canvas-sketch
 
 I'm learning how to use `pts.js` with its [official demo sketches](https://ptsjs.org/demo/?name=pts.quickStart). This repo is to recreate them with `canvas-sketch` and its supplied Canvas/context.
 
