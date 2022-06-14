@@ -19,7 +19,7 @@
   "homepage": "https://github.com/cdaein/pts-demo-with-canvas-sketch#readme",
   "dependencies": {
     "canvas-sketch": "^0.7.5",
-    "pts": "^0.10.11",
+    "pts": "^0.10.12",
     "simple-input-events": "^2.0.0"
   }
 }

@@ -5,56 +5,10 @@
 
 const canvasSketch = require("canvas-sketch");
 const createInputEvents = require("simple-input-events");
-const { CanvasForm: CF, Pt, Bound, Create, Circle, Group } = require("pts");
-
-// CanvasForm.ctx is undefined for existing ctx b/c there's no CanvasSpace
-class CanvasForm extends CF {
-  gradient(stops) {
-    let vals = [];
-    if (stops.length < 2) stops.push([0.99, "#000"], [1, "#000"]);
-
-    for (let i = 0, len = stops.length; i < len; i++) {
-      let t =
-        typeof stops[i] === "string"
-          ? i * (1 / (stops.length - 1))
-          : stops[i][0];
-      let v = typeof stops[i] === "string" ? stops[i] : stops[i][1];
-      vals.push([t, v]);
-    }
-
-    return (area1, area2) => {
-      area1 = area1.map((a) => a.abs());
-      if (area2) area2.map((a) => a.abs());
-
-      let grad = area2
-        ? this._ctx.createRadialGradient(
-            area1[0][0],
-            area1[0][1],
-            area1[1][0],
-            area2[0][0],
-            area2[0][1],
-            area2[1][0]
-          )
-        : this._ctx.createLinearGradient(
-            area1[0][0],
-            area1[0][1],
-            area1[1][0],
-            area1[1][1]
-          );
-
-      for (let i = 0, len = vals.length; i < len; i++) {
-        grad.addColorStop(vals[i][0], vals[i][1]);
-      }
-
-      return grad;
-    };
-  }
-}
+const { CanvasForm, Pt, Bound, Create, Circle, Group } = require("pts");
 
 const sketch = ({ canvas, context: ctx, pixelRatio, width, height }) => {
   const form = new CanvasForm(ctx);
-
-  // const form = new CanvasForm(ctx);
   const size = new Pt(width, height);
   const center = size.$divide(2);
   const innerBound = new Bound(new Pt(), new Pt(size));

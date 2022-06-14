@@ -1,5 +1,5 @@
 /**
- * pts
+ * pts CanvasForm(ctx) template
  */
 
 const path = require("path");

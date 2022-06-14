@@ -1,10 +1,11 @@
 /**
- * pts ERROR
+ * canvasform.composite
+ * https://ptsjs.org/demo/edit/?name=canvasform.composite
  */
 
 const canvasSketch = require("canvas-sketch");
 const createInputEvents = require("simple-input-events");
-const { CanvasForm, Pt, Bound, Create } = require("pts");
+const { CanvasForm, Pt, Bound, Create, Circle } = require("pts");
 
 const sketch = ({ canvas, context: ctx, width, height }) => {
   const form = new CanvasForm(ctx);
@@ -88,7 +89,7 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
       });
 
       // Set canvas composite operation
-      form.composite("overlay"); // TOFIX
+      form.composite("overlay");
 
       for (let k = 0, klen = nps.length; k < klen; k++) {
         for (let i = 0; i < nums; i++) {
@@ -100,20 +101,19 @@ const sketch = ({ canvas, context: ctx, width, height }) => {
       }
     },
     resize({ width, height }) {
-      size.set([width, height]); // REVIEW: when setting Pt, param has to be an array, while creating doesn't.
-      center.set(size.$divide(2));
+      size.set([width, height]);
       innerBound.bottomRight = size;
     },
   };
 };
 
 const settings = {
-  // dimensions: [600, 600],
+  dimensions: [600, 600],
   // pixelRatio: 2,
   // exportPixelRatio: 2,
   // scaleToFitPadding: 0,
   // scaleToView: true,
-  // animate: true,
+  animate: true,
   // fps: 30,
   // playbackRate: "throttle",
   // duration: 4,

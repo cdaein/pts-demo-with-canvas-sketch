@@ -1,6 +1,8 @@
 /**
  * img.pixel
  * https://ptsjs.org/demo/edit/?name=img.pixel
+ *
+ * form.image(innerBound, canvas); // REVIEW: space.element => canvas
  */
 
 const path = require("path");
@@ -98,13 +100,12 @@ const sketch = ({ canvas, context: ctx, pixelRatio, width, height }) => {
         } else if (time - lastTime > 100) {
           ctx.filter = "blur(2px) brightness(99%)";
           lastTime = time;
-          form.image(innerBound, canvas);
+          form.image(innerBound, canvas); // REVIEW: space.element => canvas
           ctx.filter = "none";
         }
       }
 
-      // form.composite("lighter"); // REVIEW: error
-      // ctx.globalCompositeOperation = "lighter";
+      ctx.globalCompositeOperation = "lighter";
 
       if (img.loaded) {
         world.drawParticles((p) => {
@@ -128,19 +129,15 @@ const sketch = ({ canvas, context: ctx, pixelRatio, width, height }) => {
       center.to(size.$divide(2));
       innerBound.bottomRight = size;
 
-      console.log(width, height);
-      console.log(size.toGroup());
-      // TOFIX:
-      // 1. this always returns size of pixelRatio=1. strange.
-      // 2. why is there stroke? (when refreshing page)
-      form.stroke(false).fill("#000000").rect(size.toGroup());
+      // TOFIX: why is there stroke? (when refreshing page)
+      // form.fillOnly("#000").rect([[0, 0], size.$multiply(pixelRatio)]);
     },
   };
 };
 
 const settings = {
   // dimensions: [600, 600],
-  // pixelRatio: 1,
+  pixelRatio: 2,
   exportPixelRatio: 2,
   // scaleToFitPadding: 0,
   // scaleToView: true,
