@@ -2,7 +2,8 @@
  * img.pixel
  * https://ptsjs.org/demo/edit/?name=img.pixel
  *
- * form.image(innerBound, canvas); // REVIEW: space.element => canvas
+ * - form.image(innerBound, canvas); // REVIEW: space.element => canvas
+ * - fillOnly has stroke.
  */
 
 const path = require("path");
@@ -87,7 +88,7 @@ const sketch = ({ canvas, context: ctx, pixelRatio, width, height }) => {
   });
 
   // initial background paint
-  form.fillOnly("#111").rect([[0, 0], size]);
+  // form.fillOnly("#111").rect([[0, 0], size]);
 
   return {
     render({ context: ctx, time, frame, fps }) {
@@ -105,7 +106,7 @@ const sketch = ({ canvas, context: ctx, pixelRatio, width, height }) => {
         }
       }
 
-      ctx.globalCompositeOperation = "lighter";
+      form.composite("lighter");
 
       if (img.loaded) {
         world.drawParticles((p) => {
@@ -130,7 +131,7 @@ const sketch = ({ canvas, context: ctx, pixelRatio, width, height }) => {
       innerBound.bottomRight = size;
 
       // TOFIX: why is there stroke? (when refreshing page)
-      // form.fillOnly("#000").rect([[0, 0], size.$multiply(pixelRatio)]);
+      form.fillOnly("#000").rect([[0, 0], size.$multiply(pixelRatio)]);
     },
   };
 };
